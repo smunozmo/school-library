@@ -17,3 +17,8 @@ class Person
     of_age? || @parent_permission
   end
 end
+
+person = Person.new(18, 'Alonso')
+
+p person.of_age?
+p person.can_use_services?
