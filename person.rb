@@ -9,11 +9,11 @@ class Person
     @name = name
     @age = age
     @parent_permission = parent_permission
+    @corrected_name = Corrector.new
   end
 
   def validate_name
-    validator = Corrector.new
-    @name = validator.correct_name(@name)
+    @name = @corrected_name.correct_name(@name)
   end
 
   def of_age?
