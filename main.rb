@@ -4,6 +4,8 @@ require './classroom'
 require './rental'
 require './book'
 
+$books = []
+
 puts 'Welcome to School Library App!'
 
 def choose_option
@@ -23,7 +25,7 @@ def choose_option
 end
 
 def list_books
-  unless books.length == 0
+  unless $books.length == 0
     puts 'More than 0'
   else
     puts 'There are no books created!'
