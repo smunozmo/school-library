@@ -22,23 +22,37 @@ def choose_option
   gets.chomp
 end
 
+def list_books
+  unless books.length == 0
+    puts 'More than 0'
+  else
+    puts 'There are no books created!'
+  end
+end
+
 def main
-  chosen_option = choose_option
-  case chosen_option
-  when '1'
-    list_books
-  when '2'
-    puts '2'
-  when '3'
-    puts '3'
-  when '4'
-    puts '4'
-  when '5'
-    puts '5'
-  when '6'
-    puts '6'
-  when '7'
-    puts '7'
+  exit_program = false
+  loop do
+    chosen_option = choose_option
+    case chosen_option
+    when '1'
+      list_books
+    when '2'
+      puts '2'
+    when '3'
+      puts '3'
+    when '4'
+      puts '4'
+    when '5'
+      puts '5'
+    when '6'
+      puts '6'
+    when '7'
+      exit_program = true
+    else
+      puts 'That\'s not a correct option'
+    end
+  break if exit_program
   end
 end
 
