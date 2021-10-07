@@ -8,7 +8,6 @@ student1 = Student.new('Math', 18, 'Student 1')
 student2 = Student.new('Math', 16, 'Student 2')
 
 book1 = Book.new('Book 1', 'Author 1')
-book2 = Book.new('Book 2', 'Author 2')
 
 book1.add_rental('2021-10-07', student1)
 p student1.rentals.length
