@@ -52,7 +52,7 @@ def main
     else
       puts 'That\'s not a correct option'
     end
-  break if exit_program
+    break if exit_program
   end
 end
 
