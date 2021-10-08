@@ -1,7 +1,5 @@
 require './student'
 require './teacher'
-require './classroom'
-require './rental'
 require './book'
 
 $books = []
@@ -27,7 +25,9 @@ end
 
 def list_books
   unless $books.length == 0
-    puts 'More than 0'
+    $books.each do |e|
+      puts "Title: \"#{e.title}\", Author: #{e.author}"
+    end
   else
     puts 'There are no books created!'
   end
@@ -72,6 +72,15 @@ def create_person
   end
 end
 
+def create_book
+  print 'Title: '
+  book_title = gets.chomp
+  print 'Author: '
+  book_author = gets.chomp
+  $books.push(Book.new(book_title, book_author))
+  puts 'Book created successfully'
+end
+
 def main
   exit_program = false
   loop do
@@ -84,7 +93,7 @@ def main
     when '3'
       create_person
     when '4'
-      puts '4'
+      create_book
     when '5'
       puts '5'
     when '6'
