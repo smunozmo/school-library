@@ -68,7 +68,7 @@ def create_person
   when '2'
     print 'Specialization: '
     specialization = gets.chomp
-    $people.push(Teacher.new(specialization, person_age, person_name))
+    Teacher.new(specialization, person_age, person_name)
     puts 'Person created successfully'
   else
     puts 'Please, select a correct person type'
