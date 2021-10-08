@@ -37,7 +37,7 @@ end
 def list_people
   unless $people.length == 0
     $people.each do |e|
-      puts "[#{e.class}] Name: #{e.name}, ID: #{e.id}, Age: #{e.age}"
+      puts "[#{e.class.to_s}] Name: #{e.name}, ID: #{e.id}, Age: #{e.age}"
     end
   else
     puts 'There are no people created!'
@@ -107,6 +107,32 @@ def create_rental
   end
 end
 
+def list_rentals_by_id
+  print 'ID of person: '
+  person_id = gets.chomp.to_i
+
+  person_found = false
+  person_selected = nil
+  $people.each do |e|
+    if e.id == person_id
+      person_found = true
+      person_selected = e
+    end
+  end
+
+  unless person_found == false
+    unless person_selected.rentals.length == 0
+      person_selected.rentals.each do |e|
+        puts "Date: #{e.date}, Book \"#{e.book.title}\" by #{e.book.author}"
+      end
+    else
+      puts 'This person does not have rentals'
+    end
+  else
+    puts 'ID does not exist!'
+  end
+end
+
 def main
   exit_program = false
   loop do
@@ -123,7 +149,7 @@ def main
     when '5'
       create_rental
     when '6'
-      puts '6'
+      list_rentals_by_id
     when '7'
       exit_program = true
     else
@@ -134,18 +160,3 @@ def main
 end
 
 main
-
-# student1 = Student.new('Math', 18, 'Student 1')
-# student2 = Student.new('Math', 16, 'Student 2')
-
-# book1 = Book.new('Book 1', 'Author 1')
-
-# book1.add_rental('2021-10-07', student1)
-# p student1.rentals.length
-# p book1.rentals
-
-# math_classroom = Classroom.new('Math')
-# math_classroom.add_student(student1)
-# math_classroom.add_student(student2)
-# p math_classroom.students.first.name
-# p math_classroom.students.last.name
