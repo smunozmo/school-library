@@ -5,6 +5,7 @@ require './rental'
 require './book'
 
 $books = []
+$people = []
 
 puts 'Welcome to School Library App!'
 
@@ -32,6 +33,45 @@ def list_books
   end
 end
 
+def list_people
+  unless $people.length == 0
+    $people.each do |e|
+      puts "[#{e.class}] Name: #{e.name}, ID: #{e.id}, Age: #{e.age}"
+    end
+  else
+    puts 'There are no people created!'
+  end
+end
+
+def create_person
+  print 'Do you want to create a student (1) or a teacher (2)? [Input the number]: '
+  person_type = gets.chomp
+  print 'Age: '
+  person_age = gets.chomp.to_i
+  print 'Name: '
+  person_name = gets.chomp
+
+  if person_type == '1'
+    print 'Has parent permission? [Y/N]: '
+    has_permission = gets.chomp
+    if has_permission == 'y' || has_permission == 'Y'
+      has_perm_bool = true
+    elsif has_permission == 'n' || has_permission == 'N'
+      has_perm_bool = false
+    end
+
+    $people.push(Student.new(person_age, person_name, has_perm_bool))
+    puts 'Person created successfully'
+  elsif person_type == '2'
+    print 'Specialization: '
+    specialization = gets.chomp
+    $people.push(Teacher.new(specialization, person_age, person_name))
+    puts 'Person created successfully'
+  else
+    puts 'Please, select a correct person type'
+  end
+end
+
 def main
   exit_program = false
   loop do
@@ -40,9 +80,9 @@ def main
     when '1'
       list_books
     when '2'
-      puts '2'
+      list_people
     when '3'
-      puts '3'
+      create_person
     when '4'
       puts '4'
     when '5'
