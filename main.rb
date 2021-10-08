@@ -1,6 +1,7 @@
 require './student'
 require './teacher'
 require './book'
+require './rental'
 
 $books = []
 $people = []
@@ -81,6 +82,31 @@ def create_book
   puts 'Book created successfully'
 end
 
+def create_rental
+  unless $books.length == 0 || $people.length == 0
+    puts 'Select a book from the following list by number'
+    $books.each_with_index do |e, idx|
+      puts "#{idx}) Title: \"#{e.title}\", Author: #{e.author}"
+    end
+    book_number = gets.chomp.to_i
+    puts
+
+    puts 'Select a person from the following list by number (not id)'
+    $people.each_with_index do |e, idx|
+      puts "#{idx}) [#{e.class.to_s}] Name: #{e.name}, ID: #{e.id}, Age: #{e.age}"
+    end
+    person_number = gets.chomp.to_i
+
+    puts
+    print 'Date: '
+    rental_date = gets.chomp
+    Rental.new(rental_date, $people[person_number], $books[book_number])
+    puts 'Rental created successfully'
+  else
+    puts 'There are no books and/or people created!'
+  end
+end
+
 def main
   exit_program = false
   loop do
@@ -95,7 +121,7 @@ def main
     when '4'
       create_book
     when '5'
-      puts '5'
+      create_rental
     when '6'
       puts '6'
     when '7'
