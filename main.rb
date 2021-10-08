@@ -25,22 +25,22 @@ def choose_option
 end
 
 def list_books
-  unless $books.length == 0
+  if $books.length.zero?
+    puts 'There are no books created!'
+  else
     $books.each do |e|
       puts "Title: \"#{e.title}\", Author: #{e.author}"
     end
-  else
-    puts 'There are no books created!'
   end
 end
 
 def list_people
-  unless $people.length == 0
-    $people.each do |e|
-      puts "[#{e.class.to_s}] Name: #{e.name}, ID: #{e.id}, Age: #{e.age}"
-    end
-  else
+  if $people.length.zero?
     puts 'There are no people created!'
+  else
+    $people.each do |e|
+      puts "[#{e.class}] Name: #{e.name}, ID: #{e.id}, Age: #{e.age}"
+    end
   end
 end
 
@@ -52,18 +52,20 @@ def create_person
   print 'Name: '
   person_name = gets.chomp
 
-  if person_type == '1'
+  case person_type
+  when '1'
     print 'Has parent permission? [Y/N]: '
     has_permission = gets.chomp
-    if has_permission == 'y' || has_permission == 'Y'
+    case has_permission
+    when 'y', 'Y'
       has_perm_bool = true
-    elsif has_permission == 'n' || has_permission == 'N'
+    when 'n', 'N'
       has_perm_bool = false
     end
 
     $people.push(Student.new(person_age, person_name, has_perm_bool))
     puts 'Person created successfully'
-  elsif person_type == '2'
+  when '2'
     print 'Specialization: '
     specialization = gets.chomp
     $people.push(Teacher.new(specialization, person_age, person_name))
@@ -83,7 +85,9 @@ def create_book
 end
 
 def create_rental
-  unless $books.length == 0 || $people.length == 0
+  if $books.length.zero? || $people.length.zero?
+    puts 'There are no books and/or people created!'
+  else
     puts 'Select a book from the following list by number'
     $books.each_with_index do |e, idx|
       puts "#{idx}) Title: \"#{e.title}\", Author: #{e.author}"
@@ -93,7 +97,7 @@ def create_rental
 
     puts 'Select a person from the following list by number (not id)'
     $people.each_with_index do |e, idx|
-      puts "#{idx}) [#{e.class.to_s}] Name: #{e.name}, ID: #{e.id}, Age: #{e.age}"
+      puts "#{idx}) [#{e.class}] Name: #{e.name}, ID: #{e.id}, Age: #{e.age}"
     end
     person_number = gets.chomp.to_i
 
@@ -102,8 +106,6 @@ def create_rental
     rental_date = gets.chomp
     Rental.new(rental_date, $people[person_number], $books[book_number])
     puts 'Rental created successfully'
-  else
-    puts 'There are no books and/or people created!'
   end
 end
 
@@ -120,24 +122,21 @@ def list_rentals_by_id
     end
   end
 
-  unless person_found == false
-    unless person_selected.rentals.length == 0
-      person_selected.rentals.each do |e|
-        puts "Date: #{e.date}, Book \"#{e.book.title}\" by #{e.book.author}"
-      end
-    else
-      puts 'This person does not have rentals'
-    end
-  else
+  if person_found == false
     puts 'ID does not exist!'
+  elsif person_selected.rentals.length.zero?
+    puts 'This person does not have rentals'
+  else
+    person_selected.rentals.each do |e|
+      puts "Date: #{e.date}, Book \"#{e.book.title}\" by #{e.book.author}"
+    end
   end
 end
 
 def main
   exit_program = false
   loop do
-    chosen_option = choose_option
-    case chosen_option
+    case choose_option
     when '1'
       list_books
     when '2'
